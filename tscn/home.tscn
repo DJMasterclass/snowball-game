@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://3vq1j8o88vd0"]
+
+[ext_resource type="Script" path="res://tscn/home.gd" id="1_2wub5"]
+[ext_resource type="Script" path="res://tscn/homescore.gd" id="2_lifwa"]
+[ext_resource type="Script" path="res://tscn/homehighscore.gd" id="3_llbgi"]
+[ext_resource type="PackedScene" uid="uid://kh0g2p4kq1aa" path="res://tscn/coolhome.tscn" id="4_cc88l"]
+[ext_resource type="AudioStream" uid="uid://q8igxu5rxs3a" path="res://click-tap-computer-mouse-352734.mp3" id="5_25432"]
+[ext_resource type="AudioStream" uid="uid://dknov4usicn11" path="res://hit-tree-01-266310.mp3" id="6_g3kvk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_60h4v"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_4l6cf"]
+font_size = 10
+
+[node name="Home" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2wub5")
+
+[node name="play" type="Button" parent="."]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 62.0
+offset_right = 65.0
+offset_bottom = 93.0
+text = "Play"
+
+[node name="quit" type="Button" parent="."]
+layout_mode = 2
+offset_left = 24.0
+offset_top = 98.0
+offset_right = 66.0
+offset_bottom = 129.0
+text = "Quit"
+
+[node name="Score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 35.0
+offset_right = 60.0
+offset_bottom = 58.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_60h4v")
+script = ExtResource("2_lifwa")
+
+[node name="HighscoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 11.0
+offset_right = 44.0
+offset_bottom = 34.0
+text = "Highscore: 0"
+label_settings = SubResource("LabelSettings_4l6cf")
+script = ExtResource("3_llbgi")
+
+[node name="Main" parent="." instance=ExtResource("4_cc88l")]
+
+[node name="click" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(44, 77)
+stream = ExtResource("5_25432")
+
+[node name="Hit-tree-01-266310" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_g3kvk")
+autoplay = true
+
+[connection signal="pressed" from="play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_pressed"]

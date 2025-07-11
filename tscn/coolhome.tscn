@@ -1,0 +1,50 @@
+[gd_scene load_steps=14 format=3 uid="uid://kh0g2p4kq1aa"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_d8a5x"]
+[ext_resource type="Script" path="res://level.gd" id="2_5o8t3"]
+[ext_resource type="PackedScene" uid="uid://po3j02sgploh" path="res://tscn/module1.tscn" id="3_dn2pk"]
+[ext_resource type="PackedScene" uid="uid://48hbqge16jh7" path="res://tscn/module2.tscn" id="4_hkey1"]
+[ext_resource type="PackedScene" uid="uid://c8udbqb7guuki" path="res://tscn/module3.tscn" id="5_e6voe"]
+[ext_resource type="PackedScene" uid="uid://bo1aid0xuxp8f" path="res://tscn/module4.tscn" id="6_nci3o"]
+[ext_resource type="Script" path="res://tscn/snowman.gd" id="7_kks20"]
+[ext_resource type="PackedScene" uid="uid://b1ak8taulnq1j" path="res://tscn/snowman.tscn" id="8_iakot"]
+[ext_resource type="Script" path="res://tscn/rock.gd" id="9_3nx38"]
+[ext_resource type="PackedScene" uid="uid://dgisymp3s5pwl" path="res://tscn/rock.tscn" id="10_howgt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mn3aw"]
+sky_horizon_color = Color(0.902614, 0.57069, 0, 1)
+sky_energy_multiplier = 8.11
+
+[sub_resource type="Sky" id="Sky_7dnkh"]
+sky_material = SubResource("ProceduralSkyMaterial_mn3aw")
+
+[sub_resource type="Environment" id="Environment_bqs6i"]
+background_mode = 2
+sky = SubResource("Sky_7dnkh")
+volumetric_fog_enabled = true
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_d8a5x")
+
+[node name="Level" type="Node3D" parent="."]
+script = ExtResource("2_5o8t3")
+modules = Array[PackedScene]([ExtResource("3_dn2pk"), ExtResource("4_hkey1"), ExtResource("5_e6voe"), ExtResource("6_nci3o")])
+
+[node name="snowman" type="Node3D" parent="."]
+script = ExtResource("7_kks20")
+snowman_scene = ExtResource("8_iakot")
+
+[node name="rock" type="Node3D" parent="."]
+script = ExtResource("9_3nx38")
+rock_scene = ExtResource("10_howgt")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bqs6i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-3.1093e-08, -0.5, 0.866025, -2.18557e-08, 0.866025, 0.5, -1, -3.38108e-09, -3.78552e-08, 373.02, 198.719, 0.0532227)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1.38545e-07, 0.258819, -0.965926, 5.86798e-08, 0.965926, 0.258819, 1, -9.25385e-08, 1.18637e-07, -7.68978, 4.77245, 0)
+fov = 103.9

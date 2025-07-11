@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://n0m7kevokx6l"
+path="res://.godot/imported/snowman.obj-c00c42589b5a64c6d5e62b4680113503.mesh"
+
+[deps]
+
+files=["res://.godot/imported/snowman.obj-c00c42589b5a64c6d5e62b4680113503.mesh"]
+
+source_file="res://snowman.obj"
+dest_files=["res://.godot/imported/snowman.obj-c00c42589b5a64c6d5e62b4680113503.mesh", "res://.godot/imported/snowman.obj-c00c42589b5a64c6d5e62b4680113503.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

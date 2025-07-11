@@ -1,0 +1,121 @@
+[gd_scene load_steps=22 format=3 uid="uid://csv7yocmtvgfw"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_bvhdi"]
+[ext_resource type="Script" path="res://main.gd" id="1_soqb3"]
+[ext_resource type="PackedScene" uid="uid://po3j02sgploh" path="res://tscn/module1.tscn" id="2_4jstn"]
+[ext_resource type="PackedScene" uid="uid://48hbqge16jh7" path="res://tscn/module2.tscn" id="3_tmlv7"]
+[ext_resource type="PackedScene" uid="uid://c8udbqb7guuki" path="res://tscn/module3.tscn" id="4_wi1b7"]
+[ext_resource type="PackedScene" uid="uid://bo1aid0xuxp8f" path="res://tscn/module4.tscn" id="5_2514v"]
+[ext_resource type="Script" path="res://snowball.gd" id="6_m64dj"]
+[ext_resource type="PackedScene" uid="uid://b1ak8taulnq1j" path="res://tscn/snowman.tscn" id="8_ppwr4"]
+[ext_resource type="Script" path="res://tscn/snowballshape.gd" id="8_so77n"]
+[ext_resource type="Script" path="res://tscn/melt.gd" id="8_wjxu1"]
+[ext_resource type="Script" path="res://tscn/rock.gd" id="9_78fuq"]
+[ext_resource type="Script" path="res://tscn/score.gd" id="10_ee717"]
+[ext_resource type="PackedScene" uid="uid://dgisymp3s5pwl" path="res://tscn/rock.tscn" id="10_xs1np"]
+[ext_resource type="Script" path="res://tscn/snowman.gd" id="12_7kock"]
+[ext_resource type="SphereMesh" uid="uid://xxob0mtacg2y" path="res://snowball.tres" id="13_mflqt"]
+[ext_resource type="AudioStream" uid="uid://d4mcqfmy37suw" path="res://birds-chirping-241045.mp3" id="16_gq2wr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mn3aw"]
+sky_horizon_color = Color(0.902614, 0.57069, 0, 1)
+sky_energy_multiplier = 8.11
+sun_angle_max = 0.0
+
+[sub_resource type="Sky" id="Sky_7dnkh"]
+sky_material = SubResource("ProceduralSkyMaterial_mn3aw")
+radiance_size = 1
+
+[sub_resource type="Environment" id="Environment_bqs6i"]
+background_mode = 2
+sky = SubResource("Sky_7dnkh")
+volumetric_fog_enabled = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h3wwo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cnfdd"]
+diffuse_mode = 3
+albedo_color = Color(0.787759, 0.787759, 0.787759, 1)
+roughness = 0.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_soqb3")
+
+[node name="Level" type="Node3D" parent="."]
+script = ExtResource("1_bvhdi")
+modules = Array[PackedScene]([ExtResource("2_4jstn"), ExtResource("3_tmlv7"), ExtResource("4_wi1b7"), ExtResource("5_2514v")])
+
+[node name="snowman" type="Node3D" parent="."]
+script = ExtResource("12_7kock")
+snowman_scene = ExtResource("8_ppwr4")
+
+[node name="rock" type="Node3D" parent="."]
+script = ExtResource("9_78fuq")
+rock_scene = ExtResource("10_xs1np")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bqs6i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-3.1093e-08, -0.5, 0.866025, -2.18557e-08, 0.866025, 0.5, -1, -3.38108e-09, -3.78552e-08, 373.02, 198.719, 0.0532227)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1.38545e-07, 0.258819, -0.965926, 5.86798e-08, 0.965926, 0.258819, 1, -9.25385e-08, 1.18637e-07, -7.68978, 4.77245, 0)
+fov = 103.9
+
+[node name="Snowball" type="CharacterBody3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_m64dj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Snowball"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.2, 0)
+shape = SubResource("SphereShape3D_h3wwo")
+
+[node name="DeathSensor" type="RayCast3D" parent="Snowball"]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.224425, 1, 0)
+
+[node name="Shadowsensor" type="RayCast3D" parent="Snowball"]
+unique_name_in_owner = true
+transform = Transform3D(-4.37114e-07, -10, 0, 10, -4.37114e-07, 0, 0, 0, 10, 0, 1.5, 0)
+collide_with_areas = true
+
+[node name="Node3D" type="Node3D" parent="Snowball"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+script = ExtResource("8_so77n")
+
+[node name="Snowballshape" type="MeshInstance3D" parent="Snowball/Node3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.2, 0)
+mesh = ExtResource("13_mflqt")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_cnfdd")
+
+[node name="Label3D" type="Label3D" parent="Snowball/Node3D"]
+transform = Transform3D(-3.0598e-07, 0, -1, 0, 7, 0, 7, 0, -4.37114e-08, 0, 3.35848, 0)
+script = ExtResource("8_wjxu1")
+
+[node name="Score" type="Label" parent="."]
+offset_left = 7.0
+offset_right = 47.0
+offset_bottom = 23.0
+script = ExtResource("10_ee717")
+
+[node name="Birds-chirping-241045" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.972824, 3, 0)
+stream = ExtResource("16_gq2wr")
+autoplay = true
+max_distance = 1248.3
+parameters/looping = true
+
+[node name="Dead" type="CPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 24
+one_shot = true
+explosiveness = 1.0
+mesh = ExtResource("13_mflqt")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -50, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 25.0

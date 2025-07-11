@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceb3lbb8vpa12"]
+
+[ext_resource type="AudioStream" uid="uid://b1ysa16pydox5" path="res://soft-background-music-368633.mp3" id="1_jxf6p"]
+
+[node name="Music" type="Node"]
+
+[node name="Soft-background-music-368633" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_jxf6p")
+autoplay = true
+parameters/looping = true

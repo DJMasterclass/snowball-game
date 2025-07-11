@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dgisymp3s5pwl"]
+
+[ext_resource type="ArrayMesh" uid="uid://c20f7ecdssh8j" path="res://tscn/rock.obj" id="1_72mgc"]
+[ext_resource type="Script" path="res://tscn/rockself.gd" id="2_ugsvj"]
+[ext_resource type="AudioStream" uid="uid://cjvdsix7d83nx" path="res://soft-body-impact-295404.mp3" id="3_hkmqr"]
+[ext_resource type="SphereMesh" uid="uid://xxob0mtacg2y" path="res://snowball.tres" id="4_v5jkh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xkwpu"]
+albedo_color = Color(0.59725, 0.421387, 0.372888, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_8jyl8"]
+data = PackedVector3Array(-0.4258, 0.6221, 0.2548, -1.1578, 0.0002, 0.2718, -0.8236, 0.4353, -0.4242, -0.8236, 0.4353, -0.4242, -1.1578, 0.0002, 0.2718, -0.9636, 0.0276, -0.9351, -0.8236, 0.4353, -0.4242, -0.9636, 0.0276, -0.9351, 0.3452, 0.5359, -0.2526, 0.3452, 0.5359, -0.2526, -0.9636, 0.0276, -0.9351, 1.1271, 0.1077, -1.0485, 0.3452, 0.5359, -0.2526, 1.1271, 0.1077, -1.0485, 0.3647, 0.4447, 0.2077, 0.3647, 0.4447, 0.2077, 1.1271, 0.1077, -1.0485, 0.8122, -0.0518, 0.7556, 0.3647, 0.4447, 0.2077, 0.8122, -0.0518, 0.7556, -0.4258, 0.6221, 0.2548, -0.4258, 0.6221, 0.2548, 0.8122, -0.0518, 0.7556, -1.1578, 0.0002, 0.2718, 1.1271, 0.1077, -1.0485, -0.9636, 0.0276, -0.9351, 0.8122, -0.0518, 0.7556, 0.8122, -0.0518, 0.7556, -0.9636, 0.0276, -0.9351, -1.1578, 0.0002, 0.2718, -0.8236, 0.4353, -0.4242, 0.3452, 0.5359, -0.2526, -0.4258, 0.6221, 0.2548, -0.4258, 0.6221, 0.2548, 0.3452, 0.5359, -0.2526, 0.3647, 0.4447, 0.2077)
+
+[node name="Rock" type="MeshInstance3D"]
+transform = Transform3D(0.2, 0, 1.27146e-08, 0, 0.2, 0, -1.27146e-08, 0, 0.2, 0, 0.500276, 0)
+mesh = ExtResource("1_72mgc")
+surface_material_override/0 = SubResource("StandardMaterial3D_xkwpu")
+script = ExtResource("2_ugsvj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
+shape = SubResource("ConcavePolygonShape3D_8jyl8")
+
+[node name="Rock" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_hkmqr")
+
+[node name="Hit" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 1.0
+mesh = ExtResource("4_v5jkh")
+direction = Vector3(1, 1, 0)
+spread = 14.09
+gravity = Vector3(0, -10, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 50.0
+angle_min = -392.7
+angle_max = 720.0
+scale_amount_min = 0.2
+scale_amount_max = 0.3
+
+[connection signal="body_entered" from="StaticBody3D/Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="StaticBody3D/Area3D" to="." method="_on_area_3d_body_exited"]
